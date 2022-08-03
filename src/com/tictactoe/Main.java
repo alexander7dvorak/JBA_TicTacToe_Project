@@ -14,6 +14,7 @@ public class Main {
         printRow(state.substring(3, 6));
         printRow(state.substring(6, 9));
         printDelimiterRow();
+        StateAnalyzer.analyzeState(state);
     }
 
     private static void printDelimiterRow() {
