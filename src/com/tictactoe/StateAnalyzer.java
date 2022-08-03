@@ -2,14 +2,14 @@ package com.tictactoe;
 
 
 public class StateAnalyzer {
-    public static void analyzeState(String state) {
+    public static boolean isEndingState(String state) {
+        boolean hasEmptyCell = state.contains(" ");
         boolean winsX = isWinning(state, 'X');
         boolean winsO = isWinning(state, 'O');
-        boolean hasEmptyCell = state.contains("_");
         int countX = (int) state.chars().filter(ch -> ch == 'X').count();
         int countO = (int) state.chars().filter(ch -> ch == 'O').count();
 
-        printResult(winsX, winsO, hasEmptyCell, countX, countO);
+        return printResult(winsX, winsO, hasEmptyCell, countX, countO);
     }
 
     private static boolean isWinning(String state, char player) {
@@ -23,24 +23,30 @@ public class StateAnalyzer {
                 state.charAt(2) == player && state.charAt(4) == player && state.charAt(6) == player;
     }
 
-    private static void printResult(boolean winsX, boolean winsO, boolean hasEmptyCell, int countX, int countO) {
+    //commented lines of code may be uncommented for the extra info and in case of generating states
+    private static boolean printResult(boolean winsX, boolean winsO, boolean hasEmptyCell, int countX, int countO) {
         if(Math.abs(countX - countO) > 1) {
-            System.out.println("Impossible");
-            return;
+            //System.out.println("Impossible");
+            return false;
         }
 
         if (winsX) {
             if (winsO) {
-                System.out.println("Impossible");
+                //System.out.println("Impossible");
+                return false;
             } else {
                 System.out.println("X wins");
+                return true;
             }
         } else if(winsO) {
-                System.out.println("O wins");
-        } else if (hasEmptyCell) {
-            System.out.println("Game not finished");
-        } else {
+            System.out.println("O wins");
+            return true;
+        } else if (!hasEmptyCell) {
             System.out.println("Draw");
+            return true;
+        } else {
+            //System.out.println("Game not finished");
+            return false;
         }
     }
 }

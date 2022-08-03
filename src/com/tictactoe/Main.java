@@ -2,26 +2,33 @@ package com.tictactoe;
 import java.util.Scanner;
 
 public class Main {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static boolean usersMove = false;
-    private static final boolean[][] occupied = new boolean[3][3];
+    private static Scanner scanner = new Scanner(System.in);
+    private static boolean userXMove = true;
+    private static boolean[][] occupied = new boolean[3][3];
 
     public static void main(String[] args) {
-        String input = scanner.next();
-        printState(input);
+        printState();
+    }
+
+    private static void printState() {
+        Printer.printDelimiterRow();
+        Printer.printRow();
+        Printer.printRow();
+        Printer.printRow();
+        Printer.printDelimiterRow();
+        int[] moveCoordinates = promptUser();
+        printState(move("         ", moveCoordinates));
     }
 
     private static void printState(String state) {
         refreshOccupied(state);
-        printDelimiterRow();
-        printRow(state.substring(0, 3));
-        printRow(state.substring(3, 6));
-        printRow(state.substring(6, 9));
-        printDelimiterRow();
-        //StateAnalyzer.analyzeState(state);
-        if (!usersMove) {
+        Printer.printDelimiterRow();
+        Printer.printRow(state.substring(0,3));
+        Printer.printRow(state.substring(3,6));
+        Printer.printRow(state.substring(6,9));
+        Printer.printDelimiterRow();
+        if (!StateAnalyzer.isEndingState(state)) {
             int[] moveCoordinates = promptUser();
-            usersMove = true;
             printState(move(state, moveCoordinates));
         }
     }
@@ -31,15 +38,8 @@ public class Main {
             if (i > 0 && i % 3 == 0) {
                 j++;
             }
-            occupied[j][i % 3] = state.charAt(i) != '_';
+            occupied[j][i % 3] = state.charAt(i) == 'X' || state.charAt(i) == 'O';
         }
-    }
-    private static void printDelimiterRow(){
-        System.out.println("---------");
-    }
-
-    private static void printRow(String row) {
-        System.out.println("| " + row.charAt(0) + " " + row.charAt(1) + " " + row.charAt(2) + " |");
     }
 
     private static int[] promptUser() {
@@ -47,21 +47,20 @@ public class Main {
         boolean moved = false;
         while(!moved) {
             try {
-                //printPromptMessage();
                 result[0] = scanner.nextInt();
                 result[1] = scanner.nextInt();
 
                 if ((result[0] > 0 && result[0] < 4) && (result[1] > 0 && result[1] < 4)) {
                     if (occupied[result[0] - 1][result[1] - 1]) {
-                        printCellIsOccupied();
+                        Printer.printCellIsOccupied();
                     } else {
                         moved = true;
                     }
                 } else {
-                    printInvalidCoordinateNumberWarning();
+                    Printer.printInvalidCoordinateNumberWarning();
                 }
             } catch (NumberFormatException e) {
-                printNonNumericSymbolWarning();
+                Printer.printNonNumericSymbolWarning();
             }
         }
         return result;
@@ -69,24 +68,9 @@ public class Main {
 
     private static String move(String previousState, int[] cellCoordinates) {
         StringBuilder result = new StringBuilder(previousState);
-        result.setCharAt((cellCoordinates[0] - 1) * 3 + cellCoordinates[1] - 1,'X');
+        result.setCharAt((cellCoordinates[0] - 1) * 3 + cellCoordinates[1] - 1, userXMove ? 'X' : 'O');
+        userXMove = !userXMove;
         return result.toString();
-    }
-
-    private static void printPromptMessage() {
-        System.out.print("Please, make a move by specifying 2 coordinate numbers: ");
-    }
-
-    private static void printInvalidCoordinateNumberWarning() {
-        System.out.println("Coordinates should be from 1 to 3!");
-    }
-
-    private static void printNonNumericSymbolWarning() {
-        System.out.println("You should enter numbers!");
-    }
-
-    private static void printCellIsOccupied() {
-        System.out.println("This cell is occupied! Choose another one!");
     }
 
 }
