@@ -1,9 +1,9 @@
 # JBA_TicTacToe_Project
 
 JetBrains Academy project
-Simple Tic-Tac-Toe
-Track: Java Developer
-Difficulty: Easy
+"Simple Tic-Tac-Toe",
+Track: Java Developer,
+Difficulty: Easy.
 
 About:
 Everybody remembers this paper-and-pencil game from childhood: Tic-Tac-Toe, 
