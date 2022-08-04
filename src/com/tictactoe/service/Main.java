@@ -1,12 +1,17 @@
-package com.tictactoe;
+package com.tictactoe.service;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 import java.util.Scanner;
 
+@Service
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean userXMove = true;
     private static boolean[][] occupied = new boolean[3][3];
 
-    public static void main(String[] args) {
+    @PostConstruct
+    public static void start() {
         printState();
     }
 
@@ -72,5 +77,4 @@ public class Main {
         userXMove = !userXMove;
         return result.toString();
     }
-
 }

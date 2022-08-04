@@ -1,5 +1,4 @@
-package com.tictactoe;
-
+package com.tictactoe.service;
 
 public class StateAnalyzer {
     public static boolean isEndingState(String state) {
@@ -23,16 +22,13 @@ public class StateAnalyzer {
                 state.charAt(2) == player && state.charAt(4) == player && state.charAt(6) == player;
     }
 
-    //commented lines of code may be uncommented for the extra info and in case of generating states
     private static boolean printResult(boolean winsX, boolean winsO, boolean hasEmptyCell, int countX, int countO) {
         if(Math.abs(countX - countO) > 1) {
-            //System.out.println("Impossible");
             return false;
         }
 
         if (winsX) {
             if (winsO) {
-                //System.out.println("Impossible");
                 return false;
             } else {
                 System.out.println("X wins");
@@ -45,7 +41,6 @@ public class StateAnalyzer {
             System.out.println("Draw");
             return true;
         } else {
-            //System.out.println("Game not finished");
             return false;
         }
     }

@@ -1,12 +1,6 @@
-package com.tictactoe;
+package com.tictactoe.service;
 
 public class Printer {
-    /* Uncomment if instructions are needed for the user
-    public static void printPromptMessage() {
-        System.out.print("Please, make a move by specifying 2 coordinate numbers: ");
-    }
-    */
-
     public static void printDelimiterRow(){
         System.out.println("---------");
     }
